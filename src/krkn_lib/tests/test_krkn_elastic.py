@@ -45,12 +45,12 @@ class TestKrknElastic(BaseTest):
     def test_push_search_metric(self):
         run_uuid = str(uuid.uuid4())
         index = "test-push-metric"
+        timestamp = str(datetime.datetime.now())
         metric_1 = ElasticMetric(
             run_uuid=run_uuid,
-            name="metric_1",
-            timestamp=100,
-            value=1.0,
-            created_at=datetime.datetime.now(),
+            metricName="metric_1",
+            timestamp=timestamp
+            value=1.0
         )
         result = self.lib_elastic.push_metric(metric_1, index)
         self.assertNotEqual(result, -1)
@@ -61,10 +61,9 @@ class TestKrknElastic(BaseTest):
             metric for metric in metrics if metric.name == "metric_1"
         )
         self.assertIsNotNone(metric)
-        self.assertEqual(metric.value, 1.0)
-        self.assertEqual(metric.timestamp, 100)
+        self.assertEqual(metric.timestamp, timestamp)
         self.assertEqual(metric.run_uuid, run_uuid)
-        self.assertEqual(metric.name, "metric_1")
+        self.assertEqual(metrics["_source"]["value"], 1.0)
 
     def test_push_search_telemetry(self):
         run_uuid = str(uuid.uuid4())
