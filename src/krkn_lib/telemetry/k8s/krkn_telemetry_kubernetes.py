@@ -100,9 +100,17 @@ class KrknTelemetryKubernetes:
         node_infos, taints = self.__kubecli.get_nodes_infos()
         chaos_telemetry.node_summary_infos = node_infos
         chaos_telemetry.cluster_version = self.__kubecli.get_version()
+        
+        chaos_telemetry.majorVersion = chaos_telemetry.cluster_version[:5]
+        chaos_telemetry.releaseStream = chaos_telemetry.majorVersion
         chaos_telemetry.node_taints = taints
         for info in node_infos:
             chaos_telemetry.total_node_count += info.count
+        
+        chaos_telemetry.jobStatus = True
+        for scenario in chaos_telemetry.scenarios:
+            if scenario.exit_status > 0:
+                chaos_telemetry.jobStatus = False
 
     def send_telemetry(
         self,

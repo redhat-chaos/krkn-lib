@@ -1,6 +1,7 @@
 import datetime
 
 from elasticsearch_dsl import (
+    Boolean,
     Date,
     Document,
     Float,
@@ -137,6 +138,8 @@ class ElasticChaosRunTelemetry(Document):
     cloud_infrastructure = Text()
     cloud_type = Text()
     cluster_version = Text()
+    releaseStream = Text()
+    jobStatus = Boolean()
     run_uuid = Text(fields={"keyword": Keyword()})
 
     class Index:
@@ -217,3 +220,6 @@ class ElasticChaosRunTelemetry(Document):
         self.cloud_type = chaos_run_telemetry.cloud_type
         self.cluster_version = chaos_run_telemetry.cluster_version
         self.run_uuid = chaos_run_telemetry.run_uuid
+        self.jobStatus = chaos_run_telemetry.jobStatus
+        self.releaseStream = chaos_run_telemetry.releaseStream
+        self.majorVersion = chaos_run_telemetry.majorVersion

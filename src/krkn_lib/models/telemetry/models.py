@@ -419,6 +419,10 @@ class ChaosRunTelemetry:
     """
     K8s or OCP version
     """
+    releaseStream: str = "Unknown"
+    """
+    General cluster version that we can group similar results
+    """
     cloud_type: str = "self-managed"
     """
     Cloud Type (if available) of the target cluster: self-managed, rosa, etc
@@ -430,6 +434,10 @@ class ChaosRunTelemetry:
     timestamp: str = ""
     """
     Current time stamp of run
+    """
+    jobStatus: bool = True
+    """
+    Overall job status, will take all scenario's exit status
     """
 
     def __init__(self, json_dict: any = None):
@@ -456,12 +464,15 @@ class ChaosRunTelemetry:
             self.cloud_infrastructure = json_dict.get("cloud_infrastructure")
             self.cloud_type = json_dict.get("cloud_type")
             self.cluster_version = json_dict.get("cluster_version")
+            self.releaseStream = self.cluster_version.split('-')[0:1]
+            self.majorVersion = self.cluster_version[:4]
             self.kubernetes_objects_count = json_dict.get(
                 "kubernetes_objects_count"
             )
             self.network_plugins = json_dict.get("network_plugins")
             self.run_uuid = json_dict.get("run_uuid")
             self.timestamp = json_dict.get("timestamp")
+            self.jobStatus = 
 
     def to_json(self) -> str:
         return json.dumps(self, default=lambda o: o.__dict__, indent=4)
