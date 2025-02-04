@@ -45,11 +45,11 @@ class TestKrknElastic(BaseTest):
     def test_push_search_metric(self):
         run_uuid = str(uuid.uuid4())
         index = "test-push-metric"
-        timestamp = str(datetime.datetime.now())
+        timestamp = datetime.datetime.now()
         metric_1 = ElasticMetric(
             run_uuid=run_uuid,
             metricName="metric_1",
-            timestamp=timestamp
+            timestamp=timestamp,
             value=1.0
         )
         result = self.lib_elastic.push_metric(metric_1, index)
@@ -57,13 +57,12 @@ class TestKrknElastic(BaseTest):
         time.sleep(1)
         metrics = self.lib_elastic.search_metric(run_uuid, index)
         self.assertEqual(len(metrics), 1)
-        metric = next(
-            metric for metric in metrics if metric.name == "metric_1"
-        )
+        metric = metrics[0]
+
         self.assertIsNotNone(metric)
-        self.assertEqual(metric.timestamp, timestamp)
+        self.assertEqual(metric.timestamp, timestamp.strftime('%Y-%m-%dT%H:%M:%S.%f'))
         self.assertEqual(metric.run_uuid, run_uuid)
-        self.assertEqual(metrics["_source"]["value"], 1.0)
+        self.assertEqual(metric["value"], 1.0)
 
     def test_push_search_telemetry(self):
         run_uuid = str(uuid.uuid4())
@@ -99,16 +98,17 @@ class TestKrknElastic(BaseTest):
             len(self.lib_elastic.search_metric(bad_metric_uuid, index)), 0
         )
 
+        time_now = datetime.datetime.now()
         self.lib_elastic.upload_metrics_to_elasticsearch(
             run_uuid=good_metric_uuid,
-            raw_data=[{"name": name, "timestamp": 10, "value": 3.14}],
+            raw_data=[{"name": name, "timestamp": time_now, "value": 3.14}],
             index=index,
         )
         time.sleep(1)
         metric = self.lib_elastic.search_metric(good_metric_uuid, index)
         self.assertEqual(len(metric), 1)
         self.assertEqual(metric[0].name, name)
-        self.assertEqual(metric[0].timestamp, 10)
+        self.assertEqual(metric[0].timestamp, time_now.strftime('%Y-%m-%dT%H:%M:%S.%f'))
         self.assertEqual(metric[0].value, 3.14)
 
     def test_search_alert_not_existing(self):
