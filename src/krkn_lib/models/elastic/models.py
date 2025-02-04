@@ -7,7 +7,6 @@ from elasticsearch_dsl import (
     InnerDoc,
     Integer,
     Keyword,
-    Long,
     Nested,
     Text,
 )

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import datetime
 import logging
 import math
 import time
@@ -9,7 +8,6 @@ import urllib3
 from elasticsearch import Elasticsearch, NotFoundError
 from elasticsearch_dsl import Search
 
-from krkn_lib.utils.functions import get_yaml_item_value
 from krkn_lib.models.elastic.models import (
     ElasticAlert,
     ElasticChaosRunTelemetry,
@@ -172,6 +170,7 @@ class KrknElastic:
             metric.save(using=self.es, index=index)
             return int(time.time() - time_start)
         except Exception as e:
+            print('error' +str(e))
             self.safe_logger.error(f'Exception pushing metric: {e}')
             return -1
 
