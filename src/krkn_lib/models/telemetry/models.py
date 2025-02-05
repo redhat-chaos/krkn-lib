@@ -419,9 +419,13 @@ class ChaosRunTelemetry:
     """
     K8s or OCP version
     """
-    releaseStream: str = "Unknown"
+    release_stream: str = "Unknown"
     """
     General cluster version that we can group similar results
+    """
+    major_version: float = 0.0
+    """
+    Major cluster version to group similar results
     """
     cloud_type: str = "self-managed"
     """
@@ -435,7 +439,7 @@ class ChaosRunTelemetry:
     """
     Current time stamp of run
     """
-    jobStatus: bool = True
+    job_status: bool = True
     """
     Overall job status, will take all scenario's exit status
     """
