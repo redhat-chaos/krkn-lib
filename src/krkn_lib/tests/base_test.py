@@ -557,5 +557,10 @@ class BaseTest(unittest.TestCase):
             "cloud_infrastructure": "AWS",
             "cloud_type": "EC2",
             "run_uuid": run_uuid,
+            "cluster_version": "4.18.0-0.nightly-202491014",
+            "major_verison": 4.18,
+            "release_stream": "4.18.0-0.nightly",
+            "job_status":True
+
         }
         return example_data

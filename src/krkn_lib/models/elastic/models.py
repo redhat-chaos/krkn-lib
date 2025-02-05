@@ -138,8 +138,9 @@ class ElasticChaosRunTelemetry(Document):
     cloud_infrastructure = Text()
     cloud_type = Text()
     cluster_version = Text()
-    releaseStream = Text()
-    jobStatus = Boolean()
+    release_stream = Text()
+    major_version = Long()
+    job_status = Boolean()
     run_uuid = Text(fields={"keyword": Keyword()})
 
     class Index:
@@ -220,6 +221,6 @@ class ElasticChaosRunTelemetry(Document):
         self.cloud_type = chaos_run_telemetry.cloud_type
         self.cluster_version = chaos_run_telemetry.cluster_version
         self.run_uuid = chaos_run_telemetry.run_uuid
-        self.jobStatus = chaos_run_telemetry.jobStatus
-        self.releaseStream = chaos_run_telemetry.releaseStream
-        self.majorVersion = chaos_run_telemetry.majorVersion
+        self.job_status = chaos_run_telemetry.job_status
+        self.release_stream = chaos_run_telemetry.release_stream
+        self.major_version = chaos_run_telemetry.major_version

@@ -464,15 +464,15 @@ class ChaosRunTelemetry:
             self.cloud_infrastructure = json_dict.get("cloud_infrastructure")
             self.cloud_type = json_dict.get("cloud_type")
             self.cluster_version = json_dict.get("cluster_version")
-            self.releaseStream = self.cluster_version.split('-')[0:1]
-            self.majorVersion = self.cluster_version[:4]
+            self.release_stream = json_dict.get("release_stream")
+            self.major_version = json_dict.get("major_version")
             self.kubernetes_objects_count = json_dict.get(
                 "kubernetes_objects_count"
             )
             self.network_plugins = json_dict.get("network_plugins")
             self.run_uuid = json_dict.get("run_uuid")
             self.timestamp = json_dict.get("timestamp")
-            self.jobStatus = 
+            self.job_status = json_dict.get("job_status")
 
     def to_json(self) -> str:
         return json.dumps(self, default=lambda o: o.__dict__, indent=4)
