@@ -1,6 +1,7 @@
 import datetime
 
 from elasticsearch_dsl import (
+    Boolean,
     Date,
     Document,
     Float,
@@ -103,6 +104,7 @@ class ElasticScenarioTelemetry(InnerDoc):
     start_timestamp = Float()
     end_timestamp = Float()
     scenario = Text(fields={"keyword": Keyword()})
+    scenario_type = Text(fields={"keyword": Keyword()})
     exit_status = Integer()
     parameters_base64 = Text()
     parameters = Nested(ElasticScenarioParameters)
@@ -137,6 +139,9 @@ class ElasticChaosRunTelemetry(Document):
     cloud_infrastructure = Text()
     cloud_type = Text()
     cluster_version = Text()
+    release_stream = Text()
+    major_version = Long()
+    job_status = Boolean()
     run_uuid = Text(fields={"keyword": Keyword()})
 
     class Index:
@@ -154,6 +159,7 @@ class ElasticChaosRunTelemetry(Document):
                 start_timestamp=sc.start_timestamp,
                 end_timestamp=sc.end_timestamp,
                 scenario=sc.scenario,
+                scenario_type=sc.scenario_type,
                 exit_status=sc.exit_status,
                 parameters_base64=sc.parameters_base64,
                 parameters=sc.parameters,
@@ -217,3 +223,6 @@ class ElasticChaosRunTelemetry(Document):
         self.cloud_type = chaos_run_telemetry.cloud_type
         self.cluster_version = chaos_run_telemetry.cluster_version
         self.run_uuid = chaos_run_telemetry.run_uuid
+        self.job_status = chaos_run_telemetry.job_status
+        self.release_stream = chaos_run_telemetry.release_stream
+        self.major_version = chaos_run_telemetry.major_version

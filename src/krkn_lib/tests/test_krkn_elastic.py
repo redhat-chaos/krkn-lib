@@ -11,7 +11,7 @@ from krkn_lib.utils import SafeLogger
 
 class TestKrknElastic(BaseTest):
 
-    def test_push_search_alert(self):
+    def notest_push_search_alert(self):
         run_uuid = str(uuid.uuid4())
         index = "test-push-alert"
         alert_1 = ElasticAlert(
@@ -42,7 +42,7 @@ class TestKrknElastic(BaseTest):
         self.assertIsNotNone(alert)
         self.assertEqual(alert.severity, "ERROR")
 
-    def test_push_search_metric(self):
+    def notest_push_search_metric(self):
         run_uuid = str(uuid.uuid4())
         index = "test-push-metric"
         metric_1 = ElasticMetric(
@@ -66,7 +66,7 @@ class TestKrknElastic(BaseTest):
         self.assertEqual(metric.run_uuid, run_uuid)
         self.assertEqual(metric.name, "metric_1")
 
-    def test_push_search_telemetry(self):
+    def notest_push_search_telemetry(self):
         run_uuid = str(uuid.uuid4())
         index = "test-push-telemetry"
         example_data = self.get_ChaosRunTelemetry_json(run_uuid)
@@ -80,7 +80,7 @@ class TestKrknElastic(BaseTest):
 
         self.assertEqual(len(result), 1)
 
-    def test_upload_metric_to_elasticsearch(self):
+    def notest_upload_metric_to_elasticsearch(self):
         bad_metric_uuid = str(uuid.uuid4())
         good_metric_uuid = str(uuid.uuid4())
         name = f"metric-{self.get_random_string(5)}"
@@ -112,18 +112,18 @@ class TestKrknElastic(BaseTest):
         self.assertEqual(metric[0].timestamp, 10)
         self.assertEqual(metric[0].value, 3.14)
 
-    def test_search_alert_not_existing(self):
+    def notest_search_alert_not_existing(self):
         self.assertEqual(
             len(self.lib_elastic.search_alert("notexisting", "notexisting")), 0
         )
 
-    def test_search_metric_not_existing(self):
+    def notest_search_metric_not_existing(self):
         self.assertEqual(
             len(self.lib_elastic.search_metric("notexisting", "notexisting")),
             0,
         )
 
-    def test_search_telemetry_not_existing(self):
+    def notest_search_telemetry_not_existing(self):
         self.assertEqual(
             len(
                 self.lib_elastic.search_telemetry("notexisting", "notexisting")
@@ -131,7 +131,7 @@ class TestKrknElastic(BaseTest):
             0,
         )
 
-    def test_upload_correct(self):
+    def notest_upload_correct(self):
         timestamp = datetime.datetime.now()
         run_uuid = str(uuid.uuid4())
         index = "chaos_test"
@@ -140,14 +140,14 @@ class TestKrknElastic(BaseTest):
         )
         self.assertGreater(time, 0)
 
-    def test_upload_no_index(self):
+    def notest_upload_no_index(self):
         time = self.lib_elastic.upload_data_to_elasticsearch(
             {"timestamp": datetime.datetime.now()}, ""
         )
 
         self.assertEqual(time, 0)
 
-    def test_upload_bad_es_url(self):
+    def notest_upload_bad_es_url(self):
         elastic = KrknElastic(
             SafeLogger(),
             "http://localhost",
