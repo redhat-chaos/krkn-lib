@@ -12,7 +12,6 @@ class TestKrknElasticModels(BaseTest):
     ):  
         
         self.assertTrue(elastic_telemetry.job_status)
-        self.assertEqual(elastic_telemetry.job_status, 0)
         self.assertEqual(len(elastic_telemetry.scenarios), 1)
         # scenarios
         self.assertEqual(
