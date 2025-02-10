@@ -225,7 +225,7 @@ class KrknTelemetryModelsTests(unittest.TestCase):
                             "start_timestamp": 1686141432,
                             "end_timestamp": 1686141435,
                             "scenario": "test",
-                            "scenario_type": "pod_disruption_scenarios",gi
+                            "scenario_type": "pod_disruption_scenarios",
                             "exit_status": 0,
                             "parameters_base64": "SSdtIG5vdCBhIGdvb2Qgc3RyaW5nIDstXA=="
                         }
