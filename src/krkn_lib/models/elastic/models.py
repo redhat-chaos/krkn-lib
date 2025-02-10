@@ -104,6 +104,7 @@ class ElasticScenarioTelemetry(InnerDoc):
     start_timestamp = Float()
     end_timestamp = Float()
     scenario = Text(fields={"keyword": Keyword()})
+    scenario_type = Text(fields={"keyword": Keyword()})
     exit_status = Integer()
     parameters_base64 = Text()
     parameters = Nested(ElasticScenarioParameters)
@@ -158,6 +159,7 @@ class ElasticChaosRunTelemetry(Document):
                 start_timestamp=sc.start_timestamp,
                 end_timestamp=sc.end_timestamp,
                 scenario=sc.scenario,
+                scenario_type=sc.scenario_type,
                 exit_status=sc.exit_status,
                 parameters_base64=sc.parameters_base64,
                 parameters=sc.parameters,

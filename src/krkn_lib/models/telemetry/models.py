@@ -61,6 +61,10 @@ class ScenarioTelemetry:
     """
     Scenario filename
     """
+    scenario_type: str
+    """
+    Scenario type
+    """
     exit_status: int
     """
     Exit Status of the Scenario Run
@@ -102,6 +106,7 @@ class ScenarioTelemetry:
             self.start_timestamp = int(json_object.get("start_timestamp"))
             self.end_timestamp = int(json_object.get("end_timestamp"))
             self.scenario = json_object.get("scenario")
+            self.scenario_type = json_object.get("scenario_type")
             self.exit_status = json_object.get("exit_status")
             self.parameters_base64 = json_object.get("parameters_base64")
             self.parameters = json_object.get("parameters")
@@ -154,6 +159,7 @@ class ScenarioTelemetry:
             self.start_timestamp = 0
             self.end_timestamp = 0
             self.scenario = ""
+            self.scenario_type = ""
             self.exit_status = 0
             self.parameters_base64 = ""
             self.parameters = {}
